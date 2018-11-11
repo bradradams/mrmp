@@ -11,6 +11,9 @@ import 'openzeppelin-solidity/contracts/token/ERC721/ERC721Mintable.sol';
 
 contract RMP721 is ERC721Full, ERC721Mintable {
 
+    address rmpManager;
+    uint tokenCount;
+
     // Note that according to the types section in solidity.readthedocs.io, enum types are not part of the ABI
     // Externally they are referred to by corresponding integer
     enum Genre { Rock, Pop, Jazz, Blues, Classical, Soul, Latin, World, Metal, Alternative, Traditional, Other }
@@ -41,6 +44,8 @@ contract RMP721 is ERC721Full, ERC721Mintable {
     mapping (uint256 => uint256) private _stHolderCount; //Mapping from from Token ID to number of stakeholders
 
     constructor() ERC721Full("RMP721", "RMP") public {
+        rmpManager = msg.sender;
+        tokenCount = 0;
     }
 
     function mintRMP721 (
@@ -56,6 +61,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
     )
         private
     {
+        require(msg.sender == rmpManager);
 
         //Generate token ID, calls _exists from ERC721
         uint256 rmpId = 0;
@@ -67,6 +73,8 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         _mint(_trustee, rmpId); //Call to _mint in ERC721
 
         _mData[rmpId] = metaData(_contAddress, _trustee, _title, _artist, _rMonth, _rDay, _rYear, _genre, _image);
+
+        tokenCount++;
     }
 
     function getMdata (uint256 _rmpId) public view returns (
@@ -104,6 +112,8 @@ contract RMP721 is ERC721Full, ERC721Mintable {
     )
         private
     {
+        require(msg.sender == rmpManager);
+
         _stHolder[_rmpId].push(stakeholder(_name, _title, _percentage, _addr));
         _stHolderCount[_rmpId] = _stHolderCount[_rmpId].add(1);
     }
