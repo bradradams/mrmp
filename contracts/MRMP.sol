@@ -1,6 +1,6 @@
 pragma solidity ^0.4.24;
 
-import 'https://github.com/bradradams/mrmp/blob/master/contracts/RMP721.sol';
+import './RMP721.sol';
 
 /**
  *
@@ -10,6 +10,6 @@ import 'https://github.com/bradradams/mrmp/blob/master/contracts/RMP721.sol';
  */
 
 contract MRMP {
-  constructor() {
+  constructor() public {
   }
 }
