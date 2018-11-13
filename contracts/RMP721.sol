@@ -16,6 +16,8 @@ contract RMP721 is ERC721Full, ERC721Mintable {
 
     // Note that according to the types section in solidity.readthedocs.io, enum types are not part of the ABI
     // Externally they are referred to by corresponding integer
+    // Can't use in mapping
+    // Considering just using an integer instead.
     enum Genre { All, Rock, Pop, Jazz, Blues, Classical, Soul, Latin, World, Metal, Alternative, Traditional, Other }
 
     struct metaData {
@@ -23,6 +25,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         address trustee; //Ethereum address where the token will be stored
         string title; //Title of recording
         string artist; //Title of performer or band
+        string album; //Album, if none use 'single'
         uint rMonth; //Release month
         uint rDay; //Release day
         uint rYear; //Release year
@@ -45,6 +48,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         address _trustee,
         string _title,
         string _artist,
+        string _album,
         uint _rMonth,
         uint _rDay,
         uint _rYear,
@@ -57,7 +61,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
 
         _mint(_trustee, _rmpId); //Call to _mint in ERC721
 
-        _mData[_rmpId] = metaData(_contAddress, _trustee, _title, _artist, _rMonth, _rDay, _rYear, _genre, _image);
+        _mData[_rmpId] = metaData(_contAddress, _trustee, _title, _artist, _album, _rMonth, _rDay, _rYear, _genre, _image);
 
         tokenCount++;
 
@@ -69,6 +73,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         address _trustee,
         string _title,
         string _artist,
+        string _album,
         uint _rMonth,
         uint _rDay,
         uint _rYear,
@@ -83,6 +88,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         _trustee = md.trustee;
         _title = md.title;
         _artist = md.artist;
+        _album = md.album;
         _rMonth = md.rMonth;
         _rDay = md.rDay;
         _rYear = md.rYear;

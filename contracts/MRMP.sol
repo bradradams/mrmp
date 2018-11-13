@@ -46,10 +46,19 @@ contract MRMP is RMP721 {
         rmpManager = msg.sender;
     }
 
+
+    //To add a song:
+    //Call generateId to obtain an ID
+    //Call addStakeholder as many times as needed to add all stakeholders
+    //Upload image to IPFS and obtain URI (Needs to be done in javascript????)
+    //Call addSong to generate contract and mint token
+
+
+
     function generateId() private view returns (uint256) {
         require(msg.sender == rmpManager);
 
-        //calls _exists from ERC721
+        //function calls _exists from ERC721
         uint256 rmpId = 0;
         while (rmpId == 0 || _exists(rmpId)) {
             rmpId = uint256(now);
@@ -94,6 +103,7 @@ contract MRMP is RMP721 {
         address _trustee,
         string _title,
         string _artist,
+        string _album,
         uint _rMonth,
         uint _rDay,
         uint _rYear,
@@ -104,19 +114,22 @@ contract MRMP is RMP721 {
     {
         require(msg.sender == rmpManager);
 
-        //require(_genre > 0 && )
+        //verify parameters here
+        //i.e. require(_genre > 0 && _genre <= 12)
 
         //create contract
+        address _contAddress = new RMPcontract(_rmpId, address(this));
 
-        address _contAddress = new RMPcontract(_rmpId, _stHolderCount[_rmpId]);
 
-
+        //check to see if artist exists, if not then add it
         bool exists = false;
         for (uint256 i = 0; i < artist.length; i++) {
            if (keccak256(bytes(artist[i])) == keccak256(bytes(_artist))) exists = true;
+            // is there a better way? Needs to be tested
         }
         if (!exists)
         artist.push(_artist);
+
 
         //add artist to genreToArtists;
 
@@ -124,15 +137,18 @@ contract MRMP is RMP721 {
 
         //add song to albumToSongs;
 
+
+
+
         songToTokenId[_title] = _rmpId;
 
-        //songToAlbum[_title] = ;
+        songToAlbum[_title] = _album;
 
-
+        albumToArtist[_album] = _artist;
 
 
         //mint token
-        mintRMP721(_rmpId, _contAddress, _trustee, _title, _artist, _rMonth, _rDay, _rYear, _genre, _image);
+        mintRMP721(_rmpId, _contAddress, _trustee, _title, _artist, _album, _rMonth, _rDay, _rYear, _genre, _image);
 
     }
 
@@ -144,6 +160,8 @@ contract MRMP is RMP721 {
     function getArtists(uint8 genre) public view returns (string[]) {
         return genreToArtists[genre];
     }
+
+    //Need more getters like one above, should test above function first
 
 
 }
