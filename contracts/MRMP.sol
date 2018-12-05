@@ -13,6 +13,7 @@ import './RMP721.sol';
 contract MRMP is RMP721 {
 
     address rmpManager;
+    address rmpContAddress;
 
 //    mapping (uint8 => string[]) internal genreToArtists;
 //
@@ -43,8 +44,9 @@ contract MRMP is RMP721 {
     uint256 numContracts;
 
 
-    constructor() public {
+    constructor(address _rmpContAddress) public {
         rmpManager = msg.sender;
+        rmpContAddress = _rmpContAddress;
     }
 
 
@@ -90,9 +92,11 @@ contract MRMP is RMP721 {
         //i.e. require(_genre > 0 && _genre <= 12)
 
         //create contract
-        address _contAddress = new RMPcontract(_rmpId, _trustee, rmpManager);
+        address _contAddress = new RMPcontract();
 
         // RMPcontract RMPcont = RMPcontract(_contAddress);
+
+        //RMPcont.initRMPcont(_rmpId, _trustee, rmpManager);
 
         rmpIdToContract[numContracts] = _contAddress;
 
@@ -129,6 +133,22 @@ contract MRMP is RMP721 {
 
     }
 
+    function addStakeholder(
+        uint256 _rmpId,
+        string _name,
+        string _title,
+        uint _percentage,
+        address _addr
+    )
+    public
+    {
+        require(msg.sender == rmpManager); // what about trustee?
+
+        RMPcontract RMPcont = RMPcontract(rmpIdToContract[_rmpId]);
+
+        RMPcont.addStakeholderOfficial(_name, _title, _percentage, _addr);
+    }
+
     function getArtists(uint8 genre, uint256 index) public view returns (string) {
         return genreToArtists[genre][index];
     }
@@ -151,7 +171,119 @@ contract MRMP is RMP721 {
 
 
 
+contract RMPcontract {
+    uint256 rmpId;
+    address rmpManager;
+    address trustee;
 
+    struct stakeholder {
+        string name; //Stakeholder's name
+        string title; //Stakeholder's title i.e. songwriter, composer, musician, organization, other
+        uint percentage; //Integer 1 to 100 indicating percentage of royalties
+        address addr; //Stakeholder's Ethereum address
+    }
+
+    mapping (uint256 => stakeholder) private stHolder; //List of stakeholders, (0 to stHolderCount - 1)
+
+    uint256 stHolderCount;
+
+    event RoyaltyPayment(uint256 tokenId, uint amount);
+
+
+
+
+    constructor() public {
+    }
+
+    function initRMPcont(uint256 _rmpId, address _rmpManager, address _trustee) public {
+        require(msg.sender == rmpManager);
+        rmpId = _rmpId;
+        rmpManager = _rmpManager;
+        trustee = _trustee;
+    }
+
+    function addStakeholderOfficial(
+        string _name,
+        string _title,
+        uint _percentage,
+        address _addr
+    )
+    public
+    {
+        require(msg.sender == rmpManager || msg.sender == trustee);
+        stHolder[stHolderCount] = stakeholder(_name, _title, _percentage, _addr);
+        stHolderCount++;
+    }
+
+    function getStakeholder(uint index) public view returns(
+        string _name,
+        string _title,
+        uint _percentage,
+        address _addr
+    )
+    {
+        stakeholder memory stk = stHolder[index];
+
+        _name = stk.name;
+        _title = stk.title;
+        _percentage = stk.percentage;
+        _addr = stk.addr;
+    }
+
+    function getNumStakeholders() public view returns (uint) {
+        return stHolderCount;
+    }
+
+    function() public payable {
+        uint amountReceived = msg.value;
+
+
+        //Unfinished
+        //Need to distribute funds to stakeholders
+        //Can this be done without floating points?
+
+        emit RoyaltyPayment(rmpId, amountReceived);
+    }
+}
+
+
+
+
+/*
+
+    contract RMPcontract {
+
+        function initRMPcont(uint256 _rmpId, address _rmpManager, address _trustee) public;
+
+        function addStakeholderOfficial(
+        string _name,
+        string _title,
+        uint _percentage,
+        address _addr
+        )
+        public;
+
+        function getStakeholder(uint index) public view returns(
+        string _name,
+        string _title,
+        uint _percentage,
+        address _addr
+        );
+
+        function getNumStakeholders() public view returns (uint);
+
+        function() public payable;
+    }
+
+*/
+
+
+
+
+
+
+
+/*
 contract RMPcontract {
     uint256 rmpId;
     address rmpManager;
@@ -220,7 +352,7 @@ contract RMPcontract {
         emit RoyaltyPayment(rmpId, amountReceived);
     }
 }
-
+*/
 
 
 
