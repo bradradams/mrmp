@@ -1,4 +1,3 @@
-// Note to Ben, Brad added this file and is not sure it is correct
 
 var RMP721 = artifacts.require("RMP721");
 

@@ -33,7 +33,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         string image; //uri for cover art image stored on IPFS
     }
 
-    mapping (uint256 => metaData) private _mData; //Mapping from Token ID to metadata
+    mapping (uint256 => metaData) public _mData; //Mapping from Token ID to metadata
 
     event newToken(uint256 tokenId);
 
@@ -55,7 +55,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         Genre _genre,
         string _image
     )
-        internal
+        public
     {
         require(msg.sender == rmpManager);
 

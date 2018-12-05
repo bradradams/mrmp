@@ -1,0 +1,1901 @@
+{
+  "contractName": "MRMP",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_rmpId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getNumStakeholders",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_rmpId",
+          "type": "uint256"
+        },
+        {
+          "name": "index",
+          "type": "uint256"
+        }
+      ],
+      "name": "getStakeholder",
+      "outputs": [
+        {
+          "name": "_name",
+          "type": "string"
+        },
+        {
+          "name": "_title",
+          "type": "string"
+        },
+        {
+          "name": "_percentage",
+          "type": "uint256"
+        },
+        {
+          "name": "_addr",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "pragma solidity ^0.4.24;\n\n//import './MRMP.sol';\n\n/**\n *\n * Official Royalty Distribution Contract\n * Music Royalty Management Platform\n *\n */\n\n\n\ncontract RMPcontract {\n    uint256 rmpId;\n    MRMP _mrmp;\n\n    // trying to access values from MRMP.sol using methods from class\n\n    event RoyaltyPayment(uint256 tokenId, uint amount);\n\n\n    constructor() public {\n    }\n\n    function setRMP_ID(uint256 _rmpId) public {\n        rmpId = _rmpId;\n    }\n\n    function callMRMPContract(address mrmpAdd) public {\n        _mrmp = MRMP(mrmpAdd);\n    }\n\n    function() public payable {\n        uint amountReceived = msg.value;\n        //uint num = _mrmp.getNumStakeholders(rmpId);\n\n        //Unfinished\n        //Not compiling apparently because this contract is imported by MRMP.sol ?\n        //Need to distribute funds to stakeholders\n        //Can this be done without floating points?\n\n        emit RoyaltyPayment(rmpId, amountReceived);\n    }\n}\n\ncontract MRMP {   // Full header is: contract MRMP is RMP721\n\n    function getNumStakeholders(uint256 _rmpId) public view returns (uint);\n\n    function getStakeholder(uint256 _rmpId, uint index) public view returns(\n        string _name,\n        string _title,\n        uint _percentage,\n        address _addr\n    );\n\n}\n\n\n\n",
+  "sourcePath": "/Users/brad/Documents/CS480/project/mrmp/contracts/RMPcontract02.sol",
+  "ast": {
+    "absolutePath": "/Users/brad/Documents/CS480/project/mrmp/contracts/RMPcontract02.sol",
+    "exportedSymbols": {
+      "MRMP": [
+        697
+      ],
+      "RMPcontract": [
+        674
+      ]
+    },
+    "id": 698,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 623,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": " * Official Royalty Distribution Contract\nMusic Royalty Management Platform\n ",
+        "fullyImplemented": true,
+        "id": 674,
+        "linearizedBaseContracts": [
+          674
+        ],
+        "name": "RMPcontract",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 625,
+            "name": "rmpId",
+            "nodeType": "VariableDeclaration",
+            "scope": 674,
+            "src": "173:13:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 624,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "173:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 627,
+            "name": "_mrmp",
+            "nodeType": "VariableDeclaration",
+            "scope": 674,
+            "src": "192:10:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_MRMP_$697",
+              "typeString": "contract MRMP"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 626,
+              "name": "MRMP",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 697,
+              "src": "192:4:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_MRMP_$697",
+                "typeString": "contract MRMP"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 633,
+            "name": "RoyaltyPayment",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 632,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 629,
+                  "indexed": false,
+                  "name": "tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 633,
+                  "src": "301:15:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 628,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "301:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 631,
+                  "indexed": false,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 633,
+                  "src": "318:11:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 630,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "318:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "300:30:3"
+            },
+            "src": "280:51:3"
+          },
+          {
+            "body": {
+              "id": 636,
+              "nodeType": "Block",
+              "src": "359:7:3",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 637,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 634,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "349:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 635,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "359:0:3"
+            },
+            "scope": 674,
+            "src": "338:28:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 646,
+              "nodeType": "Block",
+              "src": "414:31:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 644,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 642,
+                      "name": "rmpId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 625,
+                      "src": "424:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 643,
+                      "name": "_rmpId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 639,
+                      "src": "432:6:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "424:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 645,
+                  "nodeType": "ExpressionStatement",
+                  "src": "424:14:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 647,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setRMP_ID",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 640,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 639,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 647,
+                  "src": "391:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 638,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "391:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "390:16:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 641,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "414:0:3"
+            },
+            "scope": 674,
+            "src": "372:73:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 658,
+              "nodeType": "Block",
+              "src": "501:38:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 656,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 652,
+                      "name": "_mrmp",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 627,
+                      "src": "511:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_MRMP_$697",
+                        "typeString": "contract MRMP"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 654,
+                          "name": "mrmpAdd",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 649,
+                          "src": "524:7:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 653,
+                        "name": "MRMP",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 697,
+                        "src": "519:4:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_MRMP_$697_$",
+                          "typeString": "type(contract MRMP)"
+                        }
+                      },
+                      "id": 655,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "519:13:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_MRMP_$697",
+                        "typeString": "contract MRMP"
+                      }
+                    },
+                    "src": "511:21:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_MRMP_$697",
+                      "typeString": "contract MRMP"
+                    }
+                  },
+                  "id": 657,
+                  "nodeType": "ExpressionStatement",
+                  "src": "511:21:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 659,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "callMRMPContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 650,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 649,
+                  "name": "mrmpAdd",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 659,
+                  "src": "477:15:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 648,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "477:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "476:17:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 651,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "501:0:3"
+            },
+            "scope": 674,
+            "src": "451:88:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 672,
+              "nodeType": "Block",
+              "src": "571:363:3",
+              "statements": [
+                {
+                  "assignments": [
+                    663
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 663,
+                      "name": "amountReceived",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 673,
+                      "src": "581:19:3",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 662,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "581:4:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 666,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 664,
+                      "name": "msg",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2293,
+                      "src": "603:3:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_magic_message",
+                        "typeString": "msg"
+                      }
+                    },
+                    "id": 665,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "value",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "603:9:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "581:31:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 668,
+                        "name": "rmpId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 625,
+                        "src": "905:5:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 669,
+                        "name": "amountReceived",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 663,
+                        "src": "912:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 667,
+                      "name": "RoyaltyPayment",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 633,
+                      "src": "890:14:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256,uint256)"
+                      }
+                    },
+                    "id": 670,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "890:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 671,
+                  "nodeType": "EmitStatement",
+                  "src": "885:42:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 673,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 660,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "553:2:3"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 661,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "571:0:3"
+            },
+            "scope": 674,
+            "src": "545:389:3",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 698,
+        "src": "146:790:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 697,
+        "linearizedBaseContracts": [
+          697
+        ],
+        "name": "MRMP",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 681,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getNumStakeholders",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 677,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 676,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 681,
+                  "src": "1032:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 675,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1032:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1031:16:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 680,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 679,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 681,
+                  "src": "1069:4:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 678,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1069:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1068:6:3"
+            },
+            "scope": 697,
+            "src": "1004:71:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 696,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getStakeholder",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 686,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 683,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1105:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 682,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1105:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 685,
+                  "name": "index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1121:10:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 684,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1121:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1104:28:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 688,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1162:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 687,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1162:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 690,
+                  "name": "_title",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1184:13:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 689,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1184:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 692,
+                  "name": "_percentage",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1207:16:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 691,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1207:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 694,
+                  "name": "_addr",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1233:13:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1233:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1152:100:3"
+            },
+            "scope": 697,
+            "src": "1081:172:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 698,
+        "src": "938:318:3"
+      }
+    ],
+    "src": "0:1260:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/brad/Documents/CS480/project/mrmp/contracts/RMPcontract02.sol",
+    "exportedSymbols": {
+      "MRMP": [
+        697
+      ],
+      "RMPcontract": [
+        674
+      ]
+    },
+    "id": 698,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 623,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": " * Official Royalty Distribution Contract\nMusic Royalty Management Platform\n ",
+        "fullyImplemented": true,
+        "id": 674,
+        "linearizedBaseContracts": [
+          674
+        ],
+        "name": "RMPcontract",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "id": 625,
+            "name": "rmpId",
+            "nodeType": "VariableDeclaration",
+            "scope": 674,
+            "src": "173:13:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 624,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "173:7:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 627,
+            "name": "_mrmp",
+            "nodeType": "VariableDeclaration",
+            "scope": 674,
+            "src": "192:10:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_contract$_MRMP_$697",
+              "typeString": "contract MRMP"
+            },
+            "typeName": {
+              "contractScope": null,
+              "id": 626,
+              "name": "MRMP",
+              "nodeType": "UserDefinedTypeName",
+              "referencedDeclaration": 697,
+              "src": "192:4:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_contract$_MRMP_$697",
+                "typeString": "contract MRMP"
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 633,
+            "name": "RoyaltyPayment",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 632,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 629,
+                  "indexed": false,
+                  "name": "tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 633,
+                  "src": "301:15:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 628,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "301:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 631,
+                  "indexed": false,
+                  "name": "amount",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 633,
+                  "src": "318:11:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 630,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "318:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "300:30:3"
+            },
+            "src": "280:51:3"
+          },
+          {
+            "body": {
+              "id": 636,
+              "nodeType": "Block",
+              "src": "359:7:3",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 637,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 634,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "349:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 635,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "359:0:3"
+            },
+            "scope": 674,
+            "src": "338:28:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 646,
+              "nodeType": "Block",
+              "src": "414:31:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 644,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 642,
+                      "name": "rmpId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 625,
+                      "src": "424:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "id": 643,
+                      "name": "_rmpId",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 639,
+                      "src": "432:6:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "424:14:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 645,
+                  "nodeType": "ExpressionStatement",
+                  "src": "424:14:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 647,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "setRMP_ID",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 640,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 639,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 647,
+                  "src": "391:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 638,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "391:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "390:16:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 641,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "414:0:3"
+            },
+            "scope": 674,
+            "src": "372:73:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 658,
+              "nodeType": "Block",
+              "src": "501:38:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 656,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 652,
+                      "name": "_mrmp",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 627,
+                      "src": "511:5:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_MRMP_$697",
+                        "typeString": "contract MRMP"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "arguments": [
+                        {
+                          "argumentTypes": null,
+                          "id": 654,
+                          "name": "mrmpAdd",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 649,
+                          "src": "524:7:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        }
+                      ],
+                      "expression": {
+                        "argumentTypes": [
+                          {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        ],
+                        "id": 653,
+                        "name": "MRMP",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 697,
+                        "src": "519:4:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_MRMP_$697_$",
+                          "typeString": "type(contract MRMP)"
+                        }
+                      },
+                      "id": 655,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "kind": "typeConversion",
+                      "lValueRequested": false,
+                      "names": [],
+                      "nodeType": "FunctionCall",
+                      "src": "519:13:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_contract$_MRMP_$697",
+                        "typeString": "contract MRMP"
+                      }
+                    },
+                    "src": "511:21:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_contract$_MRMP_$697",
+                      "typeString": "contract MRMP"
+                    }
+                  },
+                  "id": 657,
+                  "nodeType": "ExpressionStatement",
+                  "src": "511:21:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 659,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "callMRMPContract",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 650,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 649,
+                  "name": "mrmpAdd",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 659,
+                  "src": "477:15:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 648,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "477:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "476:17:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 651,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "501:0:3"
+            },
+            "scope": 674,
+            "src": "451:88:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 672,
+              "nodeType": "Block",
+              "src": "571:363:3",
+              "statements": [
+                {
+                  "assignments": [
+                    663
+                  ],
+                  "declarations": [
+                    {
+                      "constant": false,
+                      "id": 663,
+                      "name": "amountReceived",
+                      "nodeType": "VariableDeclaration",
+                      "scope": 673,
+                      "src": "581:19:3",
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      },
+                      "typeName": {
+                        "id": 662,
+                        "name": "uint",
+                        "nodeType": "ElementaryTypeName",
+                        "src": "581:4:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      "value": null,
+                      "visibility": "internal"
+                    }
+                  ],
+                  "id": 666,
+                  "initialValue": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "id": 664,
+                      "name": "msg",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 2293,
+                      "src": "603:3:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_magic_message",
+                        "typeString": "msg"
+                      }
+                    },
+                    "id": 665,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "value",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": null,
+                    "src": "603:9:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "nodeType": "VariableDeclarationStatement",
+                  "src": "581:31:3"
+                },
+                {
+                  "eventCall": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "id": 668,
+                        "name": "rmpId",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 625,
+                        "src": "905:5:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      },
+                      {
+                        "argumentTypes": null,
+                        "id": 669,
+                        "name": "amountReceived",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 663,
+                        "src": "912:14:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "id": 667,
+                      "name": "RoyaltyPayment",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 633,
+                      "src": "890:14:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_event_nonpayable$_t_uint256_$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256,uint256)"
+                      }
+                    },
+                    "id": 670,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "890:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 671,
+                  "nodeType": "EmitStatement",
+                  "src": "885:42:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 673,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 660,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "553:2:3"
+            },
+            "payable": true,
+            "returnParameters": {
+              "id": 661,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "571:0:3"
+            },
+            "scope": 674,
+            "src": "545:389:3",
+            "stateMutability": "payable",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 698,
+        "src": "146:790:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": false,
+        "id": 697,
+        "linearizedBaseContracts": [
+          697
+        ],
+        "name": "MRMP",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": null,
+            "documentation": null,
+            "id": 681,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getNumStakeholders",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 677,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 676,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 681,
+                  "src": "1032:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 675,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1032:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1031:16:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 680,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 679,
+                  "name": "",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 681,
+                  "src": "1069:4:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 678,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1069:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1068:6:3"
+            },
+            "scope": 697,
+            "src": "1004:71:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": null,
+            "id": 696,
+            "implemented": false,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getStakeholder",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 686,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 683,
+                  "name": "_rmpId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1105:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 682,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1105:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 685,
+                  "name": "index",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1121:10:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 684,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1121:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1104:28:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 695,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 688,
+                  "name": "_name",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1162:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 687,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1162:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 690,
+                  "name": "_title",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1184:13:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 689,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1184:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 692,
+                  "name": "_percentage",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1207:16:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 691,
+                    "name": "uint",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1207:4:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 694,
+                  "name": "_addr",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 696,
+                  "src": "1233:13:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 693,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1233:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1152:100:3"
+            },
+            "scope": 697,
+            "src": "1081:172:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 698,
+        "src": "938:318:3"
+      }
+    ],
+    "src": "0:1260:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x079fc39b536e437bdb014902b4c3c265a41d9d22",
+      "transactionHash": "0x1613f7cfa983448a33a76f0471920f210f4968bd88ec0cf106b675239c55c194"
+    }
+  },
+  "schemaVersion": "2.0.1",
+  "updatedAt": "2018-12-05T03:55:25.276Z"
+}
