@@ -2,6 +2,7 @@ pragma solidity ^0.4.24;
 //pragma experimental ABIEncoderV2;
 
 import './RMP721.sol';
+import './RMPcontract.sol';
 
 /**
  *
@@ -13,7 +14,7 @@ import './RMP721.sol';
 contract MRMP is RMP721 {
 
     address rmpManager;
-    address rmpContAddress;
+    address rmp721Address;
 
 //    mapping (uint8 => string[]) internal genreToArtists;
 //
@@ -34,31 +35,37 @@ contract MRMP is RMP721 {
 
     mapping (string => string) internal songToAlbum;
 
+    mapping (string => string) internal songToImage; // IPFS image link
+
     mapping (string => string) internal albumToArtist;
+
 
 
     mapping (uint256 => address) internal rmpIdToContract;
 
-    mapping (uint256 => string) internal rmpIdToImage; // IPFS image link
-
     uint256 numContracts;
 
 
-    constructor(address _rmpContAddress) public {
+
+    event NewId(uint256 rmpId);
+
+
+    constructor(address _rmp721Address) public {
         rmpManager = msg.sender;
-        rmpContAddress = _rmpContAddress;
+        rmp721Address = _rmp721Address;
     }
 
 
     //To add a song:
     //Call generateId to obtain an ID
     //Upload image to IPFS and obtain URI (Needs to be done in javascript????)
-    //Call addSong to generate contract and mint token
+    //Call addSong to which adds song and calls generateContract
+    //generateContract creates the contract and mints token
     //Call addStakeholder as many times as needed to add all stakeholders to the official contract
 
 
 
-    function generateId() public view returns (uint256) {
+    function generateId() public {
         require(msg.sender == rmpManager);
 
         //function calls _exists from ERC721
@@ -67,7 +74,7 @@ contract MRMP is RMP721 {
             rmpId = uint256(now);
             //rmpId = uint256(keccak256(bytes((_rYear * _rMonth * _rDay)))); won't compile
         }
-        return rmpId;
+        emit NewId(rmpId);
     }
 
 
@@ -81,7 +88,7 @@ contract MRMP is RMP721 {
         uint _rMonth,
         uint _rDay,
         uint _rYear,
-        Genre _genre,
+        uint8 _genre,
         string _image
     )
         public
@@ -90,18 +97,6 @@ contract MRMP is RMP721 {
 
         //verify parameters here
         //i.e. require(_genre > 0 && _genre <= 12)
-
-        //create contract
-        address _contAddress = new RMPcontract();
-
-        // RMPcontract RMPcont = RMPcontract(_contAddress);
-
-        //RMPcont.initRMPcont(_rmpId, _trustee, rmpManager);
-
-        rmpIdToContract[numContracts] = _contAddress;
-
-        numContracts++;
-
 
         //check to see if artist exists, if not then add it
         bool exists = false;
@@ -120,7 +115,7 @@ contract MRMP is RMP721 {
         //add song to albumToSongs;
 
 
-        rmpIdToImage[_rmpId] = _image; // IPFS image link
+        songToImage[_title] = _image; // IPFS image link
 
         songToTokenId[_title] = _rmpId;
 
@@ -128,9 +123,40 @@ contract MRMP is RMP721 {
 
         albumToArtist[_album] = _artist;
 
+        //create contract and mint token
+        createContract(_rmpId, _trustee, _title, _artist, _album, _rMonth, _rDay, _rYear, _genre, _image);
+
+    }
+
+    function createContract(
+        uint256 _rmpId,
+        address _trustee,
+        string _title,
+        string _artist,
+        string _album,
+        uint _rMonth,
+        uint _rDay,
+        uint _rYear,
+        uint8 _genre,
+        string _image
+    )
+    public
+    {
+        require(msg.sender == rmpManager);
+
+        //create contract
+        address _contAddress = new RMPcontract();
+
+        RMPcontract RMPcont = RMPcontract(_contAddress);
+
+        RMPcont.initRMPcont(_rmpId, _trustee, rmpManager);
+
+        rmpIdToContract[numContracts] = _contAddress;
+
+        numContracts++;
+
         //mint token
         mintRMP721(_rmpId, _contAddress, _trustee, _title, _artist, _album, _rMonth, _rDay, _rYear, _genre, _image);
-
     }
 
     function addStakeholder(
@@ -140,7 +166,7 @@ contract MRMP is RMP721 {
         uint _percentage,
         address _addr
     )
-    public
+    publicgit
     {
         require(msg.sender == rmpManager); // what about trustee?
 
@@ -165,194 +191,3 @@ contract MRMP is RMP721 {
     //Need more getters like one above, should test above function first
 
 }
-
-
-
-
-
-
-contract RMPcontract {
-    uint256 rmpId;
-    address rmpManager;
-    address trustee;
-
-    struct stakeholder {
-        string name; //Stakeholder's name
-        string title; //Stakeholder's title i.e. songwriter, composer, musician, organization, other
-        uint percentage; //Integer 1 to 100 indicating percentage of royalties
-        address addr; //Stakeholder's Ethereum address
-    }
-
-    mapping (uint256 => stakeholder) private stHolder; //List of stakeholders, (0 to stHolderCount - 1)
-
-    uint256 stHolderCount;
-
-    event RoyaltyPayment(uint256 tokenId, uint amount);
-
-
-
-
-    constructor() public {
-    }
-
-    function initRMPcont(uint256 _rmpId, address _rmpManager, address _trustee) public {
-        require(msg.sender == rmpManager);
-        rmpId = _rmpId;
-        rmpManager = _rmpManager;
-        trustee = _trustee;
-    }
-
-    function addStakeholderOfficial(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-    )
-    public
-    {
-        require(msg.sender == rmpManager || msg.sender == trustee);
-        stHolder[stHolderCount] = stakeholder(_name, _title, _percentage, _addr);
-        stHolderCount++;
-    }
-
-    function getStakeholder(uint index) public view returns(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-    )
-    {
-        stakeholder memory stk = stHolder[index];
-
-        _name = stk.name;
-        _title = stk.title;
-        _percentage = stk.percentage;
-        _addr = stk.addr;
-    }
-
-    function getNumStakeholders() public view returns (uint) {
-        return stHolderCount;
-    }
-
-    function() public payable {
-        uint amountReceived = msg.value;
-
-
-        //Unfinished
-        //Need to distribute funds to stakeholders
-        //Can this be done without floating points?
-
-        emit RoyaltyPayment(rmpId, amountReceived);
-    }
-}
-
-
-
-
-/*
-
-    contract RMPcontract {
-
-        function initRMPcont(uint256 _rmpId, address _rmpManager, address _trustee) public;
-
-        function addStakeholderOfficial(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-        )
-        public;
-
-        function getStakeholder(uint index) public view returns(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-        );
-
-        function getNumStakeholders() public view returns (uint);
-
-        function() public payable;
-    }
-
-*/
-
-
-
-
-
-
-
-/*
-contract RMPcontract {
-    uint256 rmpId;
-    address rmpManager;
-    address trustee;
-
-    struct stakeholder {
-        string name; //Stakeholder's name
-        string title; //Stakeholder's title i.e. songwriter, composer, musician, organization, other
-        uint percentage; //Integer 1 to 100 indicating percentage of royalties
-        address addr; //Stakeholder's Ethereum address
-    }
-
-    mapping (uint256 => stakeholder) private stHolder; //List of stakeholders, (0 to stHolderCount - 1)
-
-    uint256 stHolderCount;
-
-    event RoyaltyPayment(uint256 tokenId, uint amount);
-
-
-    constructor(uint256 _rmpId, address _rmpManager, address _trustee) public {
-        rmpId = _rmpId;
-        rmpManager = _rmpManager;
-        trustee = _trustee;
-    }
-
-    function addStakeholderOfficial(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-    )
-    public
-    {
-        require(msg.sender == rmpManager || msg.sender == trustee);
-        stHolder[stHolderCount] = stakeholder(_name, _title, _percentage, _addr);
-        stHolderCount++;
-    }
-
-    function getStakeholder(uint index) public view returns(
-        string _name,
-        string _title,
-        uint _percentage,
-        address _addr
-    )
-    {
-        stakeholder memory stk = stHolder[index];
-
-        _name = stk.name;
-        _title = stk.title;
-        _percentage = stk.percentage;
-        _addr = stk.addr;
-    }
-
-    function getNumStakeholders() public view returns (uint) {
-        return stHolderCount;
-    }
-
-    function() public payable {
-        uint amountReceived = msg.value;
-
-
-        //Unfinished
-        //Need to distribute funds to stakeholders
-        //Can this be done without floating points?
-
-        emit RoyaltyPayment(rmpId, amountReceived);
-    }
-}
-*/
-
-
-

@@ -1,4 +1,3 @@
-
 var RMPcontract = artifacts.require("RMPcontract");
 var MRMP = artifacts.require("MRMP");
 

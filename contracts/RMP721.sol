@@ -14,11 +14,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
     address rmpManager;
     uint tokenCount;
 
-    // Note that according to the types section in solidity.readthedocs.io, enum types are not part of the ABI
-    // Externally they are referred to by corresponding integer
-    // Can't use in mapping
-    // Considering just using an integer instead.
-    enum Genre { All, Rock, Pop, Jazz, Blues, Classical, Soul, Latin, World, Metal, Alternative, Traditional, Other }
+    uint8 genre; // All=01, Rock=02, Pop=03, Jazz=04, Blues=05, Classical=06, Soul=07, Latin=08, World=09, Metal=10, Alternative=11, Traditional=12, Other=13
 
     struct metaData {
         address contAddress; //Official contract address for this token
@@ -29,7 +25,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         uint rMonth; //Release month
         uint rDay; //Release day
         uint rYear; //Release year
-        Genre genre; //enum Genre : See notes by enum definition above
+        uint8 genre; //enum Genre : See notes by enum definition above
         string image; //uri for cover art image stored on IPFS
     }
 
@@ -52,7 +48,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         uint _rMonth,
         uint _rDay,
         uint _rYear,
-        Genre _genre,
+        uint8 _genre,
         string _image
     )
         public
@@ -77,7 +73,7 @@ contract RMP721 is ERC721Full, ERC721Mintable {
         uint _rMonth,
         uint _rDay,
         uint _rYear,
-        Genre _genre,
+        uint8 _genre,
         string _image
     )
 
